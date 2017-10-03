@@ -8,7 +8,7 @@ function stateConfig ($routeProvider) {
       controller: 'articlesListCtrl',
       templateUrl: 'articles-list/articles-list.html'
     })
-    .when('/one', {
+    .when('/article/:id', {
       controller: 'articleCtrl',
       templateUrl: 'article/article.html'
     })

@@ -10,85 +10,85 @@ var url = "mongodb://localhost:27017/blog";
 app.use(express.static(__dirname + "/"));
 
 app.get("/list", function(req, res){
-
   mongoClient.connect(url, function(err, db){
     db.collection("articles").find().toArray(function(err, articles){
-
-      res.send(articles);
-      db.close();
+      res.json(articles);
     });
   });
 });
 
+app.get("/article/:id", function(req, res){
+  console.log(req.params.id);
 
-app.get("/api/users/:id", function(req, res){
 
-  var id = new objectId(req.params.id);
   mongoClient.connect(url, function(err, db){
-    db.collection("users").findOne({_id: id}, function(err, user){
+    var id = new objectId(req.params.id);
+    db.collection("articles").findOne({_id: id }, function(err, article){
+      res.send(article);
 
-      if(err) return res.status(400).send();
 
-      res.send(user);
-      db.close();
+    // db.collection("articles").find({_id: req.params.id}, function(err, article){
+    //   if(err) return res.status(400).send();
+    //   res.send(article);
+    //   db.close();
     });
   });
 });
 
-app.post("/api/users", jsonParser, function (req, res) {
+// app.post("/api/users", jsonParser, function (req, res) {
+//
+//   if(!req.body) return res.sendStatus(400);
+//
+//   var userName = req.body.name;
+//   var userAge = req.body.age;
+//   var user = {name: userName, age: userAge};
+//
+//   mongoClient.connect(url, function(err, db){
+//     db.collection("users").insertOne(user, function(err, result){
+//
+//       if(err) return res.status(400).send();
+//
+//       res.send(user);
+//       db.close();
+//     });
+//   });
+// });
 
-  if(!req.body) return res.sendStatus(400);
+// app.delete("/api/users/:id", function(req, res){
+//
+//   var id = new objectId(req.params.id);
+//   mongoClient.connect(url, function(err, db){
+//     db.collection("users").findOneAndDelete({_id: id}, function(err, result){
+//
+//       if(err) return res.status(400).send();
+//
+//       var user = result.value;
+//       res.send(user);
+//       db.close();
+//     });
+//   });
+// });
 
-  var userName = req.body.name;
-  var userAge = req.body.age;
-  var user = {name: userName, age: userAge};
+// app.put("/api/users", jsonParser, function(req, res){
+//
+//   if(!req.body) return res.sendStatus(400);
+//   var id = new objectId(req.body.id);
+//   var userName = req.body.name;
+//   var userAge = req.body.age;
+//
+//   mongoClient.connect(url, function(err, db){
+//     db.collection("users").findOneAndUpdate({_id: id}, { $set: {age: userAge, name: userName}},
+//       {returnOriginal: false },function(err, result){
+//
+//         if(err) return res.status(400).send();
+//
+//         var user = result.value;
+//         res.send(user);
+//         db.close();
+//       });
+//   });
+// });
 
-  mongoClient.connect(url, function(err, db){
-    db.collection("users").insertOne(user, function(err, result){
-
-      if(err) return res.status(400).send();
-
-      res.send(user);
-      db.close();
-    });
-  });
-});
-
-app.delete("/api/users/:id", function(req, res){
-
-  var id = new objectId(req.params.id);
-  mongoClient.connect(url, function(err, db){
-    db.collection("users").findOneAndDelete({_id: id}, function(err, result){
-
-      if(err) return res.status(400).send();
-
-      var user = result.value;
-      res.send(user);
-      db.close();
-    });
-  });
-});
-
-app.put("/api/users", jsonParser, function(req, res){
-
-  if(!req.body) return res.sendStatus(400);
-  var id = new objectId(req.body.id);
-  var userName = req.body.name;
-  var userAge = req.body.age;
-
-  mongoClient.connect(url, function(err, db){
-    db.collection("users").findOneAndUpdate({_id: id}, { $set: {age: userAge, name: userName}},
-      {returnOriginal: false },function(err, result){
-
-        if(err) return res.status(400).send();
-
-        var user = result.value;
-        res.send(user);
-        db.close();
-      });
-  });
-});
-
-app.listen(3000, function(){
+app.listen(5060, function(){
   console.log("Сервер ожидает подключения...");
 });
