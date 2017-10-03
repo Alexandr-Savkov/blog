@@ -1,2 +1,5 @@
-.idea
-mongodb
+/.idea/
+
+/mongodb
+/
+/bower-components/
