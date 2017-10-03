@@ -21,6 +21,6 @@ function stateConfig ($routeProvider) {
       templateUrl: 'add-article/add-article.html'
     })
     .otherwise({
-      redirectTo: '/'
+      redirectTo: '/list'
     });
 };

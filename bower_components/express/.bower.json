@@ -1,0 +1,15 @@
+{
+  "name": "express",
+  "homepage": "https://github.com/strongloop/express",
+  "version": "4.16.1",
+  "_release": "4.16.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "4.16.1",
+    "commit": "e3f7f51f5f5475ca1ad091b1f8b7293f79467d29"
+  },
+  "_source": "https://github.com/strongloop/express.git",
+  "_target": "^4.16.1",
+  "_originalSource": "express",
+  "_direct": true
+}
