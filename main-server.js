@@ -35,24 +35,20 @@ app.get("/article/:id", function(req, res){
   });
 });
 
-// app.post("/api/users", jsonParser, function (req, res) {
-//
-//   if(!req.body) return res.sendStatus(400);
-//
-//   var userName = req.body.name;
-//   var userAge = req.body.age;
-//   var user = {name: userName, age: userAge};
-//
-//   mongoClient.connect(url, function(err, db){
-//     db.collection("users").insertOne(user, function(err, result){
-//
-//       if(err) return res.status(400).send();
-//
-//       res.send(user);
-//       db.close();
-//     });
-//   });
-// });
+app.post("/addarticle", jsonParser, function (req, res) {
+
+  if(!req.body) return res.sendStatus(400);
+  console.log(req.body);
+
+  mongoClient.connect(url, function(err, db){
+    db.collection("articles").insertOne(req.body, function(err, result){
+
+      if(err) return res.status(400).send();
+
+      res.send(req.body);
+    });
+  });
+});
 
 // app.delete("/api/users/:id", function(req, res){
 //
@@ -89,6 +85,6 @@ app.get("/article/:id", function(req, res){
 //   });
 // });
 
-app.listen(5060, function(){
+app.listen(5065, function(){
   console.log("Сервер ожидает подключения...");
 });
