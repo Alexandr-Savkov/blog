@@ -11,6 +11,7 @@
     <h5> {{ comment.author }} </h5>
     <h6> {{ comment.text }} </h6>
     <h6> {{ comment.date }} </h6>
+    <button ng-click="delComment(comment.date)">Удалить комментарий</button>
   </div>
 </div>
 <br>

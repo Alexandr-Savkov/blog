@@ -8,9 +8,7 @@ app.controller('addArticleCtrl', ['$scope', '$http', '$location', '$routeParams'
       caption: $scope.caption,
       tags: tags,
       text: $scope.text,
-      comments: [{
-        text: 'sdvsdvsvd',
-      }],
+      comments: [],
     };
 
     $http.post('/addarticle', data).then(function(data){

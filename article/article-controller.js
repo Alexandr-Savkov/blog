@@ -10,7 +10,7 @@ app.controller('articleCtrl', ['$scope', '$http', '$location', '$routeParams', f
   $scope.delArticle = function() {
     var data = {id: $routeParams.id};
     console.log(data.id)
-    $http.post('/delarticle', data).then(function(data){
+    $http.delete(url).then(function(data){
       $location.path('/list');
       console.log('delete article post work');
       console.log(data);
@@ -39,6 +39,20 @@ app.controller('articleCtrl', ['$scope', '$http', '$location', '$routeParams', f
       console.log('add comment work');
     });
     $scope.text = '';
-  }
+  };
+
+  $scope.delComment = function (date){
+    var url = "/delcomment/" + $routeParams.id;
+    var newComments = $scope.allComments;
+    _.remove(newComments, function(n) {
+      return (n.date == date);
+    });
+
+    $http.post(url, newComments).then(function(data){
+      console.log('delete comment work');
+      console.log(data);
+    });
+
+  };
 
 }]);
