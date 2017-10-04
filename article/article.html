@@ -4,3 +4,18 @@
 <h3> {{ article.caption }} </h3>
 <button ng-click="delArticle()">Удалить</button>
 <a href="#!{{article._id}}"> {{ article._id }} </a>
+<br>
+<button ng-click="showComments()"> {{contentButton}} </button>
+<div  ng-show="showCommentsFlag">
+  <div ng-repeat="comment in allComments" style="border: 1px solid black">
+    <h5> {{ comment.author }} </h5>
+    <h6> {{ comment.text }} </h6>
+    <h6> {{ comment.date }} </h6>
+  </div>
+</div>
+<br>
+
+<form>
+  <div><textarea name="" id="" cols="15" rows="5" placeholder="Текст статьи" ng-model="text"></textarea></div>
+  <button type="submit" ng-click="addComment()">Добавить комментарий</button>
+</form>

@@ -19,32 +19,36 @@ app.get("/list", function(req, res){
 
 app.get("/article/:id", function(req, res){
   console.log(req.params.id);
-
-
   mongoClient.connect(url, function(err, db){
     var id = new objectId(req.params.id);
     db.collection("articles").findOne({_id: id }, function(err, article){
       res.send(article);
-
-
-    // db.collection("articles").find({_id: req.params.id}, function(err, article){
-    //   if(err) return res.status(400).send();
-    //   res.send(article);
-    //   db.close();
     });
   });
 });
 
 app.post("/addarticle", jsonParser, function (req, res) {
+  console.log(req.body);
+  mongoClient.connect(url, function(err, db){
+    db.collection("articles").insertOne(req.body, function(err, result){
+      if(err) return res.status(400).send();
+      res.send(req.body);
+    });
+  });
+});
+
+app.post("/addcomment", jsonParser, function (req, res) {
 
   console.log(req.body);
 
   mongoClient.connect(url, function(err, db){
-    db.collection("articles").insertOne(req.body, function(err, result){
+    var id = new objectId(req.body.id);
+    db.collection("articles").updateOne({_id: id}, {$push: {comments: req.body.comment} },
+    function(err, result){
 
       if(err) return res.status(400).send();
 
-      res.send(req.body);
+      res.send(result);
     });
   });
 });
@@ -83,6 +87,6 @@ app.post("/delarticle", jsonParser, function(req, res){
 //   });
 // });
 
-app.listen(5076, function(){
+app.listen(5088, function(){
   console.log("Сервер ожидает подключения...");
 });
