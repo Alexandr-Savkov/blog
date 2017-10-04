@@ -37,7 +37,6 @@ app.get("/article/:id", function(req, res){
 
 app.post("/addarticle", jsonParser, function (req, res) {
 
-  if(!req.body) return res.sendStatus(400);
   console.log(req.body);
 
   mongoClient.connect(url, function(err, db){
@@ -50,20 +49,19 @@ app.post("/addarticle", jsonParser, function (req, res) {
   });
 });
 
-// app.delete("/api/users/:id", function(req, res){
-//
-//   var id = new objectId(req.params.id);
-//   mongoClient.connect(url, function(err, db){
-//     db.collection("users").findOneAndDelete({_id: id}, function(err, result){
-//
-//       if(err) return res.status(400).send();
-//
-//       var user = result.value;
-//       res.send(user);
-//       db.close();
-//     });
-//   });
-// });
+app.post("/delarticle", jsonParser, function(req, res){
+
+  mongoClient.connect(url, function(err, db){
+    console.log("in delete req");
+    console.log(req.body);
+    var id = new objectId(req.body.id);
+    db.collection("articles").findOneAndDelete({_id: id}, function(err, result){
+
+      if(err) return res.status(400).send();
+      res.send(result);
+    });
+  });
+});
 
 // app.put("/api/users", jsonParser, function(req, res){
 //
@@ -85,6 +83,6 @@ app.post("/addarticle", jsonParser, function (req, res) {
 //   });
 // });
 
-app.listen(5065, function(){
+app.listen(5076, function(){
   console.log("Сервер ожидает подключения...");
 });

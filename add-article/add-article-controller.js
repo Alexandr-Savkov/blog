@@ -1,6 +1,6 @@
 app.controller('addArticleCtrl', ['$scope', '$http', '$location', '$routeParams', function($scope, $http, $location, $routeParams) {
 
-  $scope.addForm = function() {
+  $scope.addArticle = function() {
     var tags = $scope.tags.split(' ');  // добавить регэкс на различные случаи
 
     var data = {
@@ -12,11 +12,10 @@ app.controller('addArticleCtrl', ['$scope', '$http', '$location', '$routeParams'
     };
 
     $http.post('/addarticle', data).then(function(data){
-      $location.path('/list')
+      $location.path('/list');
       console.log('add article post work');
       console.log(data.data);
     });
-
   };
 
 

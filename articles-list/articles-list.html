@@ -1,7 +1,9 @@
 <div ng-repeat="article in articles">
-  <h2> {{ article.author }} </h2>
-  <h3> {{ article.date }} </h3>
-  <h3> {{ article.caption }} </h3>
-  <button ng-click="changeArt(article._id)">id</button>
-  <a rel="shortcut icon" href="#!article/{{ article._id }}"> {{ article._id }} </a>
+  <h2> {{ article.caption }} </h2>
+  <h3> {{ article.author }} </h3>
+  <h4> {{ article.date | date: 'dd/MM/yyyy' }} </h4>
+  <h4> {{ article.tags }} </h4>
+  
+ 
+  <a rel="shortcut icon" href="#!article/{{ article._id }}">Открыть статью</a>
 </div>

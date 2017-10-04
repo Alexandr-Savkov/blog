@@ -7,4 +7,16 @@ app.controller('articleCtrl', ['$scope', '$http', '$location', '$routeParams', f
     $scope.article = data.data;
     console.log($scope.article);
   });
+
+  $scope.delArticle = function() {
+    var data = {id: $routeParams.id};
+    console.log(data.id)
+    $http.post('/delarticle', data).then(function(data){
+      $location.path('/list');
+      console.log('delete article post work');
+      console.log(data);
+    });
+
+  };
+
 }]);
