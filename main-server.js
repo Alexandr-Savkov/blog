@@ -49,6 +49,18 @@ app.post("/setarticle/:id", jsonParser, function (req, res) {
   });
 });
 
+app.delete("/delarticle/:id", jsonParser, function(req, res){
+  mongoClient.connect(url, function(err, db){
+    console.log("in delete req");
+    console.log(req.params);
+    var id = new objectId(req.params.id);
+    db.collection("articles").findOneAndDelete({_id: id}, function(err, result){
+      if(err) return res.status(400).send();
+      res.send(result);
+    });
+  });
+});
+
 app.post("/addcomment", jsonParser, function (req, res) {
 
   console.log(req.body);
@@ -60,18 +72,6 @@ app.post("/addcomment", jsonParser, function (req, res) {
 
       if(err) return res.status(400).send();
 
-      res.send(result);
-    });
-  });
-});
-
-app.delete("/delarticle/:id", jsonParser, function(req, res){
-  mongoClient.connect(url, function(err, db){
-    console.log("in delete req");
-    console.log(req.params);
-    var id = new objectId(req.params.id);
-    db.collection("articles").findOneAndDelete({_id: id}, function(err, result){
-      if(err) return res.status(400).send();
       res.send(result);
     });
   });
@@ -91,6 +91,24 @@ app.post("/delcomment/:id", jsonParser, function(req, res){
   });
 });
 
+app.get("/getprofile", jsonParser, function(req, res){
+  mongoClient.connect(url, function(err, db){
+    db.collection("profile").find().toArray(function(err, countries){
+      res.json(countries);
+    });
+  });
+});
+
+app.post("/setprofile", jsonParser, function (req, res) {
+  console.log(req.body);
+  mongoClient.connect(url, function(err, db){
+    db.collection("profile").drop();
+    db.collection("profile").insert(req.body, function(err, result){
+      if(err) return res.status(400).send();
+      res.send(req.body);
+    });
+  });
+});
 
 app.get('/countries', jsonParser, function(req, res){
   mongoClient.connect(url, function(err, db){
@@ -102,8 +120,6 @@ app.get('/countries', jsonParser, function(req, res){
   });
 });
 
-
-
-app.listen(6081, function(){
+app.listen(6083, function(){
   console.log("Сервер ожидает подключения...");
 });

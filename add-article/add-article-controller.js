@@ -1,5 +1,11 @@
 app.controller('addArticleCtrl', ['$scope', '$http', '$location', '$routeParams', '$rootScope', function($scope, $http, $location, $routeParams, $rootScope) {
 
+  $http.get('/getprofile').then(function(res){
+    console.log(res.data[0].name);
+    $scope.profileName = res.data[0].name;
+    console.log($scope.profileCountry );
+  });
+
   $scope.addArticle = function() {
     var tags;
     if ($scope.tags === undefined) {

@@ -8,6 +8,12 @@ app.controller('articleCtrl', ['$scope', '$http', '$location', '$routeParams', '
     console.log($scope.article);
   });
 
+  $http.get('/getprofile').then(function(res){
+    console.log(res.data[0].name);
+    $scope.profileName = res.data[0].name;
+    console.log($scope.profileCountry );
+  });
+
   $scope.showCommentsFlag = false;
   $scope.contentButton = "Развернуть комментарии";
   $scope.showSetArticleFlag = false;
@@ -63,7 +69,7 @@ app.controller('articleCtrl', ['$scope', '$http', '$location', '$routeParams', '
       comment: {
         text: $scope.textComment,
         date: Date.now(),
-        author: $rootScope.profileName,
+        author: $scope.profileName,
     }};
     console.log($scope.allComments);
     $scope.allComments.push(data.comment);
