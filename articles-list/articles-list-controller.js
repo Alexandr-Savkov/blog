@@ -1,4 +1,5 @@
-app.controller('articlesListCtrl', ['$scope', '$http', '$location', function($scope, $http, $location) {
+app.controller('articlesListCtrl', ['$scope', '$http', '$location', '$rootScope', function($scope, $http, $location, $rootScope) {
+
 
   $scope.changeArt = function (id) {
     console.log("'/"+id+"'");

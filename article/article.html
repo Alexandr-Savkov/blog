@@ -1,22 +1,38 @@
-
-<h2> {{ article.author }} </h2>
-<h3> {{ article.date }} </h3>
-<h3> {{ article.caption }} </h3>
-<button ng-click="delArticle()">Удалить</button>
-<a href="#!{{article._id}}"> {{ article._id }} </a>
 <br>
-<button ng-click="showComments()"> {{contentButton}} </button>
-<div  ng-show="showCommentsFlag">
-  <div ng-repeat="comment in allComments" style="border: 1px solid black">
-    <h5> {{ comment.author }} </h5>
-    <h6> {{ comment.text }} </h6>
-    <h6> {{ comment.date }} </h6>
-    <button ng-click="delComment(comment.date)">Удалить комментарий</button>
+<form ng-if="showSetArticleFlag">
+  <div><input type="text" ng-model="article.caption"></div>
+  <div><textarea cols="30" rows="10" ng-model="article.text"></textarea></div>
+  <div><input type="text" id="" placeholder="теги к статье" ng-model="article.tags"></div>
+  <p>Автор: {{$root.profileName}}</p> <p>для изменения данных перейдите в </p> <a href="#!profile" target="_blank">настройка профиля</a>
+  <button type="submit" ng-click="saveSetArticle()">Сохранить изменения</button>
+</form>
+
+
+<div ng-show="!showSetArticleFlag">
+  <div>
+    <h2> {{ article.author }} </h2>
+    <h3> {{ article.date }} </h3>
+    <h3> {{ article.caption }} </h3>
+    <h3> {{ article.text }} </h3>
+    <button ng-click="delArticle()">Удалить</button>
+    <button ng-click="setArticle()">Редактировать</button>
+    <a href="#!{{article._id}}"> {{ article._id }} </a>
+    <br>
+    <button ng-click="showComments()"> {{contentButton}} </button>
+  </div>
+  <div  ng-show="showCommentsFlag">
+    <div ng-repeat="comment in allComments" style="border: 1px solid black">
+      <h5> {{ comment.author }} </h5>
+      <h6> {{ comment.text }} </h6>
+      <h6> {{ comment.date }} </h6>
+      <button ng-click="delComment(comment.date)">Удалить комментарий</button>
+    </div>
   </div>
 </div>
+
 <br>
 
-<form>
-  <div><textarea name="" id="" cols="15" rows="5" placeholder="Текст статьи" ng-model="text"></textarea></div>
+<form ng-show="!showSetArticleFlag">
+  <div><textarea cols="15" rows="5" placeholder="Текст комментария" ng-model="textComment"></textarea></div>
   <button type="submit" ng-click="addComment()">Добавить комментарий</button>
 </form>

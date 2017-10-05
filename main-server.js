@@ -17,7 +17,7 @@ app.get("/list", function(req, res){
   });
 });
 
-app.get("/article/:id", function(req, res){
+app.get("/getarticle/:id", jsonParser, function(req, res){
   console.log(req.params.id);
   mongoClient.connect(url, function(err, db){
     var id = new objectId(req.params.id);
@@ -30,6 +30,18 @@ app.get("/article/:id", function(req, res){
 app.post("/addarticle", jsonParser, function (req, res) {
   console.log(req.body);
   mongoClient.connect(url, function(err, db){
+    db.collection("articles").insertOne(req.body, function(err, result){
+      if(err) return res.status(400).send();
+      res.send(req.body);
+    });
+  });
+});
+
+app.post("/setarticle/:id", jsonParser, function (req, res) {
+  console.log(req.body);
+  mongoClient.connect(url, function(err, db){
+    var id = new objectId(req.params.id);
+    db.collection("articles").remove({_id: id})
     db.collection("articles").insertOne(req.body, function(err, result){
       if(err) return res.status(400).send();
       res.send(req.body);
@@ -53,7 +65,7 @@ app.post("/addcomment", jsonParser, function (req, res) {
   });
 });
 
-app.delete("/article/:id", jsonParser, function(req, res){
+app.delete("/delarticle/:id", jsonParser, function(req, res){
   mongoClient.connect(url, function(err, db){
     console.log("in delete req");
     console.log(req.params);
@@ -80,8 +92,18 @@ app.post("/delcomment/:id", jsonParser, function(req, res){
 });
 
 
+app.get('/countries', jsonParser, function(req, res){
+  mongoClient.connect(url, function(err, db){
+    console.log("дайте страны");
+
+    db.collection("countries").find().toArray(function(err, countries){
+      res.json(countries);
+    });
+  });
+});
 
 
-app.listen(6060, function(){
+
+app.listen(6081, function(){
   console.log("Сервер ожидает подключения...");
 });

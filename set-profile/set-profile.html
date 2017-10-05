@@ -1,1 +1,27 @@
-<p>set-profile</p>
+<div>Имя: {{$root.profileName}}</div>
+<div>Город: {{profileTown}}</div>
+<div>Страна: {{profileCountry}}</div>
+<button ng-click="showSetting()">{{settingButton}}</button>
+<button ng-click="defaultProfile()">Удалить данные профиля</button>
+
+<form action="" ng-show="showForm">
+  <div>
+    <label for="name">Имя пользователя: </label>
+    <input type="text" id="name" maxlength="48" ng-model="$root.profileName" placeholder="Введите имя">
+  </div>
+  <div>
+    <label for="town">Город: </label>
+    <input type="text" id="town" ng-model="profileTown" placeholder="Введите город">
+  </div>
+  <div>
+    <label for="country">Выберите страну: </label>
+    <select id="country" ng-model="profileCountry">
+      <option value="Kashyyyk" selected>Я не с этой планеты</option>
+      <option value="{{country}}" ng-repeat="country in countries">{{country}}</option>
+    </select>
+  </div>
+  
+  <button ng-click="saveProfile()">Сохранить</button>
+  
+  
+</form>

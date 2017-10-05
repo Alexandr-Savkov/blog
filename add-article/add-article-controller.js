@@ -1,16 +1,21 @@
-app.controller('addArticleCtrl', ['$scope', '$http', '$location', '$routeParams', function($scope, $http, $location, $routeParams) {
+app.controller('addArticleCtrl', ['$scope', '$http', '$location', '$routeParams', '$rootScope', function($scope, $http, $location, $routeParams, $rootScope) {
 
   $scope.addArticle = function() {
-    var tags = $scope.tags.split(' ');  // добавить регэкс на различные случаи
+    var tags;
+    if ($scope.tags === undefined) {
+     tags = 'у данной статьи тэгов нет';
+    } else {
+      tags = $scope.tags.split(' ');
+    };
+    // добавить регэкс на различные случаи
     var data = {
-      author: "no-name",
+      author: $rootScope.profileName,
       date: Date.now(),
       caption: $scope.caption,
       tags: tags,
       text: $scope.text,
       comments: [],
     };
-
     $http.post('/addarticle', data).then(function(data){
       $location.path('/list');
       console.log('add article post work');
@@ -18,10 +23,4 @@ app.controller('addArticleCtrl', ['$scope', '$http', '$location', '$routeParams'
     });
   };
 
-
-
-  // $http.get(url).then(function(data){
-  //   $scope.article = data.data;
-  //   console.log($scope.article);
-  // });
 }]);
