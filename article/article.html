@@ -10,7 +10,7 @@
 
 <div ng-show="!showSetArticleFlag">
   <div>
-    <h2> {{ article.author }} </h2>
+    <h2> {{ $root.profileName }} </h2>
     <h3> {{ article.date }} </h3>
     <h3> {{ article.caption }} </h3>
     <h3> {{ article.text }} </h3>
@@ -22,7 +22,7 @@
   </div>
   <div  ng-show="showCommentsFlag">
     <div ng-repeat="comment in allComments" style="border: 1px solid black">
-      <h5> {{ comment.author }} </h5>
+      <h5> {{ $root.profileName }} </h5>
       <h6> {{ comment.text }} </h6>
       <h6> {{ comment.date }} </h6>
       <button ng-click="delComment(comment.date)">Удалить комментарий</button>

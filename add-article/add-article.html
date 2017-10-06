@@ -3,7 +3,7 @@
   <div><input type="text" id="" placeholder="Заголовок" ng-model="caption"></div>
   <div><textarea name="" id="" cols="30" rows="10" placeholder="Текст статьи" ng-model="text"></textarea></div>
   <div><input type="text" id="" placeholder="теги к статье" ng-model="tags"></div>
-  <p>Автор: {{profileName}}</p> <p>для изменения данных перейдите в </p> <a href="#!profile" target="_blank">настройка профиля</a>
+  <p>Автор: {{$root.profileName}}</p> <p>для изменения данных перейдите в </p> <a href="#!profile" target="_blank">настройка профиля</a>
   
   
   <button type="submit" ng-click="addArticle()" class="btn btn-primary">Сохранить статью</button>

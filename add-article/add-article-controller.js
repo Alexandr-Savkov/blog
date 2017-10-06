@@ -1,10 +1,12 @@
 app.controller('addArticleCtrl', ['$scope', '$http', '$location', '$routeParams', '$rootScope', function($scope, $http, $location, $routeParams, $rootScope) {
 
-  $http.get('/getprofile').then(function(res){
-    console.log(res.data[0].name);
-    $scope.profileName = res.data[0].name;
-    console.log($scope.profileCountry );
-  });
+  if ($rootScope.profileName === undefined) {
+    $http.get('/getprofilename').then(function(res){
+      console.log(res);
+      $rootScope.profileName = res.data;
+    });
+  };
+
 
   $scope.addArticle = function() {
     var tags;
@@ -15,7 +17,6 @@ app.controller('addArticleCtrl', ['$scope', '$http', '$location', '$routeParams'
     };
     // добавить регэкс на различные случаи
     var data = {
-      author: $rootScope.profileName,
       date: Date.now(),
       caption: $scope.caption,
       tags: tags,

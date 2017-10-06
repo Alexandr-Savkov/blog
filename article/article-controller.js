@@ -8,11 +8,12 @@ app.controller('articleCtrl', ['$scope', '$http', '$location', '$routeParams', '
     console.log($scope.article);
   });
 
-  $http.get('/getprofile').then(function(res){
-    console.log(res.data[0].name);
-    $scope.profileName = res.data[0].name;
-    console.log($scope.profileCountry );
-  });
+  if ($rootScope.profileName === undefined) {
+    $http.get('/getprofilename').then(function(res){
+      console.log(res);
+      $rootScope.profileName = res.data;
+    });
+  };
 
   $scope.showCommentsFlag = false;
   $scope.contentButton = "Развернуть комментарии";

@@ -1,8 +1,11 @@
 app.controller('articlesListCtrl', ['$scope', '$http', '$location', '$rootScope', function($scope, $http, $location, $rootScope) {
 
-  $http.get('/getprofile').then(function(res){
-    $rootScope.profileName = res.data[0].name;
-  });
+  if ($rootScope.profileName === undefined) {
+    $http.get('/getprofilename').then(function(res){
+      console.log(res);
+      $rootScope.profileName = res.data;
+    });
+  };
 
   $scope.changeArt = function (id) {
     console.log("'/"+id+"'");

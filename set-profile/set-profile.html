@@ -1,6 +1,9 @@
 <div>Имя: {{$root.profileName}}</div>
 <div>Город: {{profileTown}}</div>
 <div>Страна: {{profileCountry}}</div>
+<div style="width: 200px; height: 200px; background-color: grey" id="test">
+  <img src = '{{profilePhoto}}' alt="" style="width: 200px; height: 200px;">
+</div>
 <button ng-click="showSetting()">{{settingButton}}</button>
 <button ng-click="defaultProfile()">Удалить данные профиля</button>
 
@@ -20,6 +23,11 @@
       <option value="{{country}}" ng-repeat="country in countries">{{country}}</option>
     </select>
   </div>
+  <div>
+    <label for="photo">Загрузить аватар: </label>
+    <input type="file" id="photo"  onchange="angular.element(this).scope().changeImg()">
+  </div>
+  
   
   <button ng-click="saveProfile()">Сохранить</button>
 </form>

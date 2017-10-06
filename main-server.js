@@ -7,6 +7,9 @@ var app = express();
 var jsonParser = bodyParser.json();
 var url = "mongodb://localhost:27017/blog";
 
+app.use(bodyParser.json({limit: '50mb'})); // for post big data
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+
 app.use(express.static(__dirname + "/"));
 
 app.get("/list", function(req, res){
@@ -99,6 +102,22 @@ app.get("/getprofile", jsonParser, function(req, res){
   });
 });
 
+app.get("/getdefaultprofile", jsonParser, function(req, res){
+  mongoClient.connect(url, function(err, db){
+    db.collection("defaultprofile").find().toArray(function(err, countries){
+      res.json(countries);
+    });
+  });
+});
+
+app.get("/getprofilename", jsonParser, function(req, res){
+  mongoClient.connect(url, function(err, db){
+    db.collection("profile").find().toArray(function(err, profile){
+      res.json(profile[0].name);
+    });
+  });
+});
+
 app.post("/setprofile", jsonParser, function (req, res) {
   console.log(req.body);
   mongoClient.connect(url, function(err, db){
@@ -109,6 +128,8 @@ app.post("/setprofile", jsonParser, function (req, res) {
     });
   });
 });
+
+
 
 app.get('/countries', jsonParser, function(req, res){
   mongoClient.connect(url, function(err, db){
