@@ -1,34 +1,55 @@
-<br>
+
 <form ng-if="showSetArticleFlag">
-  <div><input type="text" ng-model="article.caption"></div>
-  <div><textarea cols="30" rows="10" ng-model="article.text"></textarea></div>
-  <div><input type="text" id="" placeholder="теги к статье" ng-model="article.tags"></div>
-  <p>Автор: {{$root.profileName}}</p> <p>для изменения данных перейдите в </p> <a href="#!profile" target="_blank">настройка профиля</a>
-  <button type="submit" ng-click="saveEditingArticle()">Сохранить изменения</button>
-  <button ng-click="cancelEditingArticle()">Отменить изменения</button>
+  <div class="form-group">
+    <label for="caption">Заголовок статьи</label>
+    <input type="text" class="form-control" id="caption" ng-model="article.caption">
+  </div>
+  <div class="form-group">
+    <label for="text">Текст статьи</label>
+    <textarea class="form-control" id="text" rows="15" ng-model="article.text"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="tags">Тэги к статье</label>
+    <input type="text" class="form-control" id="tags" ng-model="article.tags">
+  </div>
+  <p><i>Автор:</i> {{$root.profileName}}</p>
+  
+  
+  <button class="btn btn-success" type="submit" ng-click="saveEditingArticle()">Сохранить изменения</button>
+  <button class="btn" ng-click="cancelEditingArticle()">Отменить изменения</button>
 </form>
 
 
 <div ng-show="!showSetArticleFlag">
-  <div>
-    <h2> {{ $root.profileName }} </h2>
-    <h3> {{ article.date | date: 'dd/MM/yyyy' }} </h3>
-    <h3> {{ article.caption }} </h3>
-    <h3> {{ article.text }} </h3>
-    <h3> {{ article.tags }} </h3>
-    <button ng-click="delArticle()">Удалить</button>
-    <button ng-click="editingArticle()">Редактировать</button>
-    <a href="#!"> Вернуться к списку статей </a>
-    <br>
-    <button ng-click="showComments()"> {{contentButton}} </button>
+  <div class="article-div">
+    <h2> {{ article.caption }} </h2>
+    <div class="name-author">
+      <p><small>Дата публикации:</small> <i>{{ article.date | date: 'dd/MM/yyyy hh:mm' }}</i> </p>
+      <p><small>Автор:</small> <i>{{ $root.profileName }}</i> </p>
+    </div>
+    <p class="short-article-text"> {{ article.text }}</p>
+    <p><small>Теги: </small><i>{{ article.tags }}</i> </p>
+  
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-success" ng-click="showComments()"> {{contentButton}} </button>
+      <button type="button" class="btn btn-secondary" ng-click="editingArticle()">Редактировать статью</button>
+      <a type="button" class="btn btn-primary" href="#!">Вернуться к списку статей</a>
+    </div>
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Удалть статью</button>
+    
+    <a > </a>
+    
   </div>
   
   <div  ng-show="showCommentsFlag">
-    <div ng-repeat="comment in allComments" style="border: 1px solid black">
-      <h5> {{ $root.profileName }} </h5>
-      <h6> {{ comment.text }} </h6>
-      <h6> {{ comment.date }} </h6>
-      <button ng-click="delComment(comment.date)">Удалить комментарий</button>
+    <div ng-repeat="comment in allComments" class="comment-div">
+      <p class="comment-text"> {{ comment.text }} </p>
+      <div class="name-author">
+        <p> <small>{{ $root.profileName }}</small> </p>
+        <p> <small>{{ comment.date | date: 'dd/MM/yyyy' }}</small> </p>
+      </div>
+      
+      <button class="btn btn-danger btn-xs" ng-click="delComment(comment.date)">Удалить комментарий</button>
     </div>
   </div>
 </div>
@@ -36,6 +57,29 @@
 <br>
 
 <form ng-show="!showSetArticleFlag">
-  <div><textarea cols="15" rows="5" placeholder="Текст комментария" ng-model="textComment"></textarea></div>
-  <button type="submit" ng-click="addComment()">Добавить комментарий</button>
+  <div class="form-group">
+    <label for="commenttext">Текст комментария</label>
+    <textarea class="form-control" id="commenttext" rows="2" cols="30" ng-model="textComment"></textarea>
+  </div>
+  <button type="submit" class="btn" ng-click="addComment()">Добавить комментарий</button>
 </form>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Внимание!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Статья удалится безвозвратно</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отменить удаление</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="delArticle()">Да, удалить</button>
+      </div>
+    </div>
+  </div>
+</div>

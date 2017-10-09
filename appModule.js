@@ -24,3 +24,24 @@ function stateConfig ($routeProvider) {
       redirectTo: '/list'
     });
 };
+
+app.filter('searchTag', function(){
+  return function(articles, tag){
+
+    if(!tag){
+      return articles;
+    };
+
+    var result = [];
+    tag = tag.toLowerCase();
+
+    angular.forEach(articles, function(article){
+      if(article.tags.toLowerCase().indexOf(tag) !== -1){
+        result.push(article);
+      };
+    });
+
+    return result;
+  };
+
+});

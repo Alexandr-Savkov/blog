@@ -43,7 +43,7 @@ app.controller('articlesListCtrl', ['$scope', '$http', '$location', '$rootScope'
       allElem[i].classList.remove("active");
     });
     elem.classList.add("active");
-    
+
     var start = (pageValue-1) * 5;
     var end = (pageValue-1) * 5 + 4;
     $scope.visibleArticles = $scope.articles.slice( start, end );

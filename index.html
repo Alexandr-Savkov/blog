@@ -22,13 +22,18 @@
   <script type="text/javascript" src="set-profile/set-profile-controller.js"></script>
 </head>
 <body>
-  <header>Blog</header>
-  <h4>Привет, {{$root.profileName}}</h4>
-  <a href="#!one">one</a>
-  <a href="#!list">list</a>
-  <a href="#!add">!add</a>
-  <a href="#!profile">!profile</a>
-  <div ng-view></div>
+  <header>
+    <a href="#!list" class="logo">BlogName</a>
+    <div class="nav-div">
+        <div class="nav-links"><a href="#!list">Все статьи</a></div>
+        <div class="nav-links"><a href="#!add">Добавить статью</a></div>
+      <div class="nav-links">
+          <a href="#!profile"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{$root.profileName}}</a>
+        </div>
+    </div>
+  </header>
+  
+  <div ng-view class="view-wrap"></div>
 
   
   <footer></footer>
