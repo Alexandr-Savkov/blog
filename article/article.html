@@ -4,7 +4,8 @@
   <div><textarea cols="30" rows="10" ng-model="article.text"></textarea></div>
   <div><input type="text" id="" placeholder="теги к статье" ng-model="article.tags"></div>
   <p>Автор: {{$root.profileName}}</p> <p>для изменения данных перейдите в </p> <a href="#!profile" target="_blank">настройка профиля</a>
-  <button type="submit" ng-click="saveSetArticle()">Сохранить изменения</button>
+  <button type="submit" ng-click="saveEditingArticle()">Сохранить изменения</button>
+  <button ng-click="cancelEditingArticle()">Отменить изменения</button>
 </form>
 
 
@@ -14,12 +15,14 @@
     <h3> {{ article.date }} </h3>
     <h3> {{ article.caption }} </h3>
     <h3> {{ article.text }} </h3>
+    <h3> {{ article.tags }} </h3>
     <button ng-click="delArticle()">Удалить</button>
-    <button ng-click="setArticle()">Редактировать</button>
+    <button ng-click="editingArticle()">Редактировать</button>
     <a href="#!{{article._id}}"> {{ article._id }} </a>
     <br>
     <button ng-click="showComments()"> {{contentButton}} </button>
   </div>
+  
   <div  ng-show="showCommentsFlag">
     <div ng-repeat="comment in allComments" style="border: 1px solid black">
       <h5> {{ $root.profileName }} </h5>

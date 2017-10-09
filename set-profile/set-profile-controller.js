@@ -41,7 +41,6 @@ app.controller('setProfileCtrl', ['$scope', '$http', '$location', '$routeParams'
     profileSettingFlag = false;
   };
 
-  //
   $scope.changeImg = function () {
     var file    = document.querySelector('input[type=file]').files[0];
     var reader  = new FileReader();
@@ -55,10 +54,7 @@ app.controller('setProfileCtrl', ['$scope', '$http', '$location', '$routeParams'
     } else {
       img.src = oldProfilePhoto;
     };
-    console.log(img.src);
   };
-
-
 
   $scope.saveProfile = function () {
     profileSettingFlag = true;
@@ -77,9 +73,7 @@ app.controller('setProfileCtrl', ['$scope', '$http', '$location', '$routeParams'
     };
     $http.post('/setprofile', data).then(function(data){
       console.log('set profile work');
-      console.log(data);
     });
-    console.log(img.src);
   };
 
   $scope.defaultProfile = function () {

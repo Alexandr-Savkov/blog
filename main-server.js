@@ -129,8 +129,6 @@ app.post("/setprofile", jsonParser, function (req, res) {
   });
 });
 
-
-
 app.get('/countries', jsonParser, function(req, res){
   mongoClient.connect(url, function(err, db){
     console.log("дайте страны");

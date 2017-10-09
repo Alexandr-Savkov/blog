@@ -1,13 +1,5 @@
 app.controller('articleCtrl', ['$scope', '$http', '$location', '$routeParams', '$rootScope', function($scope, $http, $location, $routeParams, $rootScope) {
 
-  var url = "/getarticle/" + $routeParams.id;
-  $http.get(url).then(function(data){
-    $scope.article = data.data;
-    $scope.allComments = $scope.article.comments;
-    console.log('article');
-    console.log($scope.article);
-  });
-
   if ($rootScope.profileName === undefined) {
     $http.get('/getprofilename').then(function(res){
       console.log(res);
@@ -15,14 +7,35 @@ app.controller('articleCtrl', ['$scope', '$http', '$location', '$routeParams', '
     });
   };
 
+  var oldArticleDate,
+      oldArticleCaption,
+      oldArticleText,
+      oldArticleTags;
+
   $scope.showCommentsFlag = false;
   $scope.contentButton = "Развернуть комментарии";
   $scope.showSetArticleFlag = false;
 
+  var url = "/getarticle/" + $routeParams.id;
+  $http.get(url).then(function(res){
+    $scope.article = res.data;
+    $scope.allComments = $scope.article.comments;
+    console.log('article');
+    console.log($scope.article);
+    console.log($scope.article.date);
+
+    oldArticleDate = $scope.article.date;
+    oldArticleCaption = $scope.article.caption;
+    oldArticleText = $scope.article.text;
+    oldArticleTags = $scope.article.tags;
+
+  });
+
+
+
   $scope.delArticle = function() {
     var url = "/delarticle/" + $routeParams.id;
-    var data = {id: $routeParams.id};
-    console.log(data.id)
+
     $http.delete(url).then(function(data){
       $location.path('/list');
       console.log('delete article post work');
@@ -30,23 +43,34 @@ app.controller('articleCtrl', ['$scope', '$http', '$location', '$routeParams', '
     });
   };
 
-  $scope.setArticle = function() {
-    $scope.showSetArticleFlag = true;
+  $scope.editingArticle = function() {
+    if (!$scope.showSetArticleFlag) {
+      $scope.showSetArticleFlag = true;
+    } else {$scope.showSetArticleFlag = true;}
   };
 
-  $scope.saveSetArticle = function() {
-    var tags;
-    if ($scope.tags === undefined) {
-      tags = 'у данной статьи тэгов нет';
+  $scope.cancelEditingArticle = function () {
+    $scope.showSetArticleFlag = false;
+
+    $scope.article.date = oldArticleDate;
+    $scope.article.caption = oldArticleCaption;
+    $scope.article.text = oldArticleText;
+    $scope.article.tags = oldArticleTags;
+  };
+
+  $scope.saveEditingArticle = function() {
+    var arr_tags, str_tags;
+    if ($scope.article.tags === undefined) {
+      str_tags = 'тэгов нет';
     } else {
-      tags = $scope.tags.split(' ');
+      arr_tags = $scope.article.tags.split(/,+ +|,+| +|; +/);
+      str_tags = arr_tags.join(' ');
     };
-    // добавить регэкс на различные случаи
     var data = {
       author: $rootScope.profileName,
       date: Date.now(),
       caption: $scope.article.caption,
-      tags: tags,
+      tags: str_tags,
       text: $scope.article.text,
       comments: [],
     };

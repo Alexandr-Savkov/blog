@@ -9,17 +9,17 @@ app.controller('addArticleCtrl', ['$scope', '$http', '$location', '$routeParams'
 
 
   $scope.addArticle = function() {
-    var tags;
+    var arr_tags, str_tags;
     if ($scope.tags === undefined) {
-     tags = 'у данной статьи тэгов нет';
+     str_tags = 'тэгов нет';
     } else {
-      tags = $scope.tags.split(' ');
+      arr_tags = $scope.tags.split(/,+ +|,+| +|; +/);
+      str_tags = arr_tags.join(' ');
     };
-    // добавить регэкс на различные случаи
     var data = {
       date: Date.now(),
       caption: $scope.caption,
-      tags: tags,
+      tags: str_tags,
       text: $scope.text,
       comments: [],
     };
@@ -30,4 +30,18 @@ app.controller('addArticleCtrl', ['$scope', '$http', '$location', '$routeParams'
     });
   };
 
+  $scope.addTag = function (id) {
+    var tag = document.getElementById(id);
+    var tagValue = tag.innerHTML;
+
+    if (tag.addedFlag) {
+      $scope.tags = $scope.tags.replace(tagValue, '');
+      $scope.tags = $scope.tags.replace(/^ | $/, '');
+    } else {
+      ( $scope.tags === undefined || $scope.tags === '') ? ($scope.tags = tagValue) : ($scope.tags += ' ' + tagValue);
+    };
+
+    tag.classList.toggle('tag_selected');
+    tag.addedFlag = !tag.addedFlag;
+  };
 }]);

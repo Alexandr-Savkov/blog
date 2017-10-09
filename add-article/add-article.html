@@ -1,8 +1,16 @@
 <br>
 <form>
-  <div><input type="text" id="" placeholder="Заголовок" ng-model="caption"></div>
-  <div><textarea name="" id="" cols="30" rows="10" placeholder="Текст статьи" ng-model="text"></textarea></div>
-  <div><input type="text" id="" placeholder="теги к статье" ng-model="tags"></div>
+  <div><input type="text" placeholder="Заголовок" ng-model="caption"></div>
+  <div><textarea name="" cols="30" rows="10" placeholder="Текст статьи" ng-model="text"></textarea></div>
+  <div><input type="text" placeholder="теги к статье" ng-model="tags"></div>
+  <div>
+    <h5>Стандартные тэги</h5>
+    <p id="defaultTag1" style="border: 1px solid black" ng-click="addTag('defaultTag1')">Стандарт1</p>
+    <p id="defaultTag2" style="border: 1px solid black" ng-click="addTag('defaultTag2')">Стандарт2</p>
+    <p id="defaultTag3" style="border: 1px solid black" ng-click="addTag('defaultTag3')">Стандарт3</p>
+    <p id="defaultTag4" style="border: 1px solid black" ng-click="addTag('defaultTag4')">Стандарт4</p>
+    <p id="defaultTag5" style="border: 1px solid black" ng-click="addTag('defaultTag5')">Стандарт5</p>
+  </div>
   <p>Автор: {{$root.profileName}}</p> <p>для изменения данных перейдите в </p> <a href="#!profile" target="_blank">настройка профиля</a>
   
   
