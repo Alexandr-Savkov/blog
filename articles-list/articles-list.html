@@ -1,9 +1,17 @@
-<div ng-repeat="article in articles">
+<div ng-repeat="article in visibleArticles" style="border: 1px solid grey;">
   <h2> {{ article.caption }} </h2>
   <h3> {{ $root.profileName }} </h3>
+  <p> {{ article.text | limitTo:150 }} </p>
   <h4> {{ article.date | date: 'dd/MM/yyyy' }} </h4>
   <h4> {{ article.tags }} </h4>
   
- 
   <a rel="shortcut icon" href="#!article/{{ article._id }}">Открыть статью</a>
 </div>
+
+<nav aria-label="Page navigation" ng-if="paginationFlag">
+  <ul class="pagination">
+
+    <li class="page-item" id="{{page}}" ng-click="showPages( page )" ng-repeat="page in pageList"><a class="page-link">{{ page }}</a></li>
+
+  </ul>
+</nav>

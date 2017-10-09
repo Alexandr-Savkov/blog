@@ -12,13 +12,13 @@
 <div ng-show="!showSetArticleFlag">
   <div>
     <h2> {{ $root.profileName }} </h2>
-    <h3> {{ article.date }} </h3>
+    <h3> {{ article.date | date: 'dd/MM/yyyy' }} </h3>
     <h3> {{ article.caption }} </h3>
     <h3> {{ article.text }} </h3>
     <h3> {{ article.tags }} </h3>
     <button ng-click="delArticle()">Удалить</button>
     <button ng-click="editingArticle()">Редактировать</button>
-    <a href="#!{{article._id}}"> {{ article._id }} </a>
+    <a href="#!"> Вернуться к списку статей </a>
     <br>
     <button ng-click="showComments()"> {{contentButton}} </button>
   </div>
