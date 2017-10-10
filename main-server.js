@@ -96,8 +96,8 @@ app.post("/delcomment/:id", jsonParser, function(req, res){
 
 app.get("/getprofile", jsonParser, function(req, res){
   mongoClient.connect(url, function(err, db){
-    db.collection("profile").find().toArray(function(err, countries){
-      res.json(countries);
+    db.collection("profile").find().toArray(function(err, profile){
+      res.json(profile);
     });
   });
 });
@@ -106,14 +106,6 @@ app.get("/getdefaultprofile", jsonParser, function(req, res){
   mongoClient.connect(url, function(err, db){
     db.collection("defaultprofile").find().toArray(function(err, countries){
       res.json(countries);
-    });
-  });
-});
-
-app.get("/getprofilename", jsonParser, function(req, res){
-  mongoClient.connect(url, function(err, db){
-    db.collection("profile").find().toArray(function(err, profile){
-      res.json(profile[0].name);
     });
   });
 });

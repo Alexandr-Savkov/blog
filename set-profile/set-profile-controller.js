@@ -10,21 +10,20 @@ app.controller('setProfileCtrl', ['$scope', '$http', '$location', '$routeParams'
     oldProfileTown,
     oldProfilePhoto;
 
-  var img = document.querySelector('img');
+  var img = document.getElementById('profile-photo-img');
 
   $http.get('/getprofile').then(function(res){
     $rootScope.profileName = res.data[0].name;
     $scope.profileTown = res.data[0].town;
     $scope.profileCountry = res.data[0].country;
     img.src = res.data[0].photo;
+    $rootScope.profilePhoto = res.data[0].photo;
 
     oldProfileCountry = $scope.profileCountry;
     oldProfileName = $rootScope.profileName;
     oldProfileTown = $scope.profileTown;
     oldProfilePhoto = img.src;
   });
-
-
 
   $scope.showForm = false;
   $scope.settingButton = 'Редактировать профиль';
@@ -35,6 +34,7 @@ app.controller('setProfileCtrl', ['$scope', '$http', '$location', '$routeParams'
       $scope.profileCountry = oldProfileCountry;
       $scope.profileTown = oldProfileTown;
       img.src = oldProfilePhoto;
+      $rootScope.profilePhoto = oldProfilePhoto;
     };
     $scope.showForm = !$scope.showForm;
     $scope.settingButton = $scope.showForm ? 'Свернуть редактирование' : 'Редактировать профиль';
@@ -47,12 +47,14 @@ app.controller('setProfileCtrl', ['$scope', '$http', '$location', '$routeParams'
 
     reader.onloadend = function () {
       img.src = reader.result;
+      $rootScope.profilePhoto = reader.result;
     };
 
     if (file) {
       reader.readAsDataURL(file);
     } else {
       img.src = oldProfilePhoto;
+      $rootScope.profilePhoto = oldProfilePhoto;
     };
   };
 
@@ -64,16 +66,14 @@ app.controller('setProfileCtrl', ['$scope', '$http', '$location', '$routeParams'
     oldProfileCountry = $scope.profileCountry;
     oldProfileName = $rootScope.profileName;
     oldProfileTown = $scope.profileTown;
-    oldProfilePhoto = img.src;
+    oldProfilePhoto = $rootScope.profilePhoto;
     var data = {
       name: $rootScope.profileName,
       country: $scope.profileCountry,
       town: $scope.profileTown,
-      photo: img.src
+      photo: $rootScope.profilePhoto,
     };
-    $http.post('/setprofile', data).then(function(data){
-      console.log('set profile work');
-    });
+    $http.post('/setprofile', data).then(function(data){});
   };
 
   $scope.defaultProfile = function () {
@@ -82,6 +82,7 @@ app.controller('setProfileCtrl', ['$scope', '$http', '$location', '$routeParams'
       $scope.profileTown = res.data[0].town;
       $scope.profileCountry = res.data[0].country;
       img.src = res.data[0].photo;
+      $rootScope.profilePhoto = res.data[0].photo;
 
       oldProfileCountry = $scope.profileCountry;
       oldProfileName = $rootScope.profileName;

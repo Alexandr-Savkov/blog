@@ -11,10 +11,6 @@
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
   <link rel="stylesheet" href="main-css.css">
-  
-  
- 
-  
   <script type="text/javascript" src="appModule.js"></script>
   <script type="text/javascript" src="articles-list/articles-list-controller.js"></script>
   <script type="text/javascript" src="article/article-controller.js"></script>
@@ -27,15 +23,29 @@
     <div class="nav-div">
         <div class="nav-links"><a href="#!list">Все статьи</a></div>
         <div class="nav-links"><a href="#!add">Добавить статью</a></div>
-      <div class="nav-links">
-          <a href="#!profile"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{$root.profileName}}</a>
+        <div class="nav-links">
+          <a href="#!profile">
+            <img src="{{$root.profilePhoto}}">
+            {{$root.profileName | limitTo: 13}}
+          </a>
         </div>
     </div>
   </header>
   
   <div ng-view class="view-wrap"></div>
-
   
-  <footer></footer>
+  <footer>
+    <a href="#!list" class="logo">BlogName</a>
+    <div class="nav-div">
+      <div class="nav-links"><a href="#!list">Все статьи</a></div>
+      <div class="nav-links"><a href="#!add">Добавить статью</a></div>
+      <div class="nav-links">
+        <a href="#!profile">
+          <img src="{{$root.profilePhoto}}">
+          {{$root.profileName | limitTo: 13}}
+        </a>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>

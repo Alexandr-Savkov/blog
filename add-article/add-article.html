@@ -1,18 +1,27 @@
-<br>
 <form>
-  <div><input type="text" placeholder="Заголовок" ng-model="caption"></div>
-  <div><textarea name="" cols="30" rows="10" placeholder="Текст статьи" ng-model="text"></textarea></div>
-  <div><input type="text" placeholder="теги к статье" ng-model="tags"></div>
-  <div>
-    <h5>Стандартные тэги</h5>
-    <p id="defaultTag1" style="border: 1px solid black" ng-click="addTag('defaultTag1')">Стандарт1</p>
-    <p id="defaultTag2" style="border: 1px solid black" ng-click="addTag('defaultTag2')">Стандарт2</p>
-    <p id="defaultTag3" style="border: 1px solid black" ng-click="addTag('defaultTag3')">Стандарт3</p>
-    <p id="defaultTag4" style="border: 1px solid black" ng-click="addTag('defaultTag4')">Стандарт4</p>
-    <p id="defaultTag5" style="border: 1px solid black" ng-click="addTag('defaultTag5')">Стандарт5</p>
+  <div class="form-group">
+    <label for="caption">Заголовок статьи</label>
+    <input type="text" class="form-control" id="caption" ng-model="caption">
   </div>
-  <p>Автор: {{$root.profileName}}</p> <p>для изменения данных перейдите в </p> <a href="#!profile" target="_blank">настройка профиля</a>
+  <div class="form-group">
+    <label for="text">Текст статьи</label>
+    <textarea class="form-control" id="text" rows="15" ng-model="text"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="tags">Тэги к статье</label>
+    <input type="text" class="form-control" id="tags" ng-model="tags">
+  </div>
   
+  <h5>Стандартные тэги</h5>
+  <div class="btn-group" role="group">
+    <button id="defaultTag1" ng-click="addTag('defaultTag1')" type="button" class="btn btn-default">Природа</button>
+    <button id="defaultTag2" ng-click="addTag('defaultTag2')" type="button" class="btn btn-default">Холод</button>
+    <button id="defaultTag3" ng-click="addTag('defaultTag3')" type="button" class="btn btn-default">JavaScript</button>
+    <button id="defaultTag4" ng-click="addTag('defaultTag4')" type="button" class="btn btn-default">Осень</button>
+    <button id="defaultTag5" ng-click="addTag('defaultTag5')" type="button" class="btn btn-default">Ветер</button>
+  </div>
   
-  <button type="submit" ng-click="addArticle()" class="btn btn-primary">Сохранить статью</button>
+  <p><i>Автор:</i> {{$root.profileName}}</p>
+  
+  <button class="btn btn-success" type="submit" ng-click="addArticle()">Сохранить статью</button>
 </form>

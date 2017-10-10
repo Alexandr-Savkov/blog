@@ -1,9 +1,11 @@
 app.controller('articleCtrl', ['$scope', '$http', '$location', '$routeParams', '$rootScope', function($scope, $http, $location, $routeParams, $rootScope) {
 
   if ($rootScope.profileName === undefined) {
-    $http.get('/getprofilename').then(function(res){
+    $http.get('/getprofile').then(function(res){
       console.log(res);
-      $rootScope.profileName = res.data;
+      console.log(res.data[0].name);
+      $rootScope.profileName = res.data[0].name;
+      $rootScope.profilePhoto = res.data[0].photo;
     });
   };
 
@@ -20,26 +22,18 @@ app.controller('articleCtrl', ['$scope', '$http', '$location', '$routeParams', '
   $http.get(url).then(function(res){
     $scope.article = res.data;
     $scope.allComments = $scope.article.comments;
-    console.log('article');
-    console.log($scope.article);
-    console.log($scope.article.date);
 
     oldArticleDate = $scope.article.date;
     oldArticleCaption = $scope.article.caption;
     oldArticleText = $scope.article.text;
     oldArticleTags = $scope.article.tags;
-
   });
-
-
 
   $scope.delArticle = function() {
     var url = "/delarticle/" + $routeParams.id;
 
     $http.delete(url).then(function(data){
       $location.path('/list');
-      console.log('delete article post work');
-      console.log(data);
     });
   };
 
@@ -77,11 +71,8 @@ app.controller('articleCtrl', ['$scope', '$http', '$location', '$routeParams', '
     var url = "/setarticle/" + $routeParams.id;
     $http.post(url, data).then(function(data){
       $location.path('/list');
-      console.log('setting article post work');
-      console.log(data.data);
     });
   };
-
 
   $scope.showComments = function() {
     $scope.showCommentsFlag = !$scope.showCommentsFlag;
@@ -96,11 +87,8 @@ app.controller('articleCtrl', ['$scope', '$http', '$location', '$routeParams', '
         date: Date.now(),
         author: $scope.profileName,
     }};
-    console.log($scope.allComments);
     $scope.allComments.push(data.comment);
-    $http.post('/addcomment', data).then(function(data){
-      console.log('add comment work');
-    });
+    $http.post('/addcomment', data).then(function(data){});
     $scope.textComment = '';
   };
 
@@ -110,12 +98,7 @@ app.controller('articleCtrl', ['$scope', '$http', '$location', '$routeParams', '
     _.remove(newComments, function(n) {
       return (n.date == date);
     });
-
-    $http.post(url, newComments).then(function(data){
-      console.log('delete comment work');
-      console.log(data);
-    });
-
+    $http.post(url, newComments).then(function(data){});
   };
 
 }]);

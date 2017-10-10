@@ -4,16 +4,14 @@ body {
     min-width: 640px;
     width: 75%;
     margin: 50px auto;
-
-
 }
-header {
+header, footer {
     background-color: white;
     min-width: 640px;
     width: 75%;
     box-shadow: 3px 3px rgba(0, 0, 0, 0.32);
     border-radius: 10px;
-    height: 55px;
+    height: 60px;
     margin: 0 auto 15px;
     display: flex;
     justify-content: space-around;
@@ -32,13 +30,21 @@ a.logo {
 }
 .nav-links{
     text-align: center;
-    padding: 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 15px;
 }
 .nav-links a {
     text-decoration: none;
 }
 .nav-links:hover {
     background-color: #ebe8ff;
+}
+header img, footer img {
+    height: 50px;
+    border-radius: 30%;
+    margin-right: 5px;
 }
 .view-wrap {
     background-color: white;
@@ -47,7 +53,7 @@ a.logo {
     min-width: 640px;
     width: 75%;
     padding: 5px;
-    margin: 0 auto;
+    margin: 0 auto 15px;
 }
 
 /*article-list*/
@@ -83,7 +89,44 @@ nav.pagination-div {
 .comment-text {
     font-size: 16px;
 }
+textarea {
+    resize: none;
+}
+.comment-form {
+    width: 50%;
+}
 
-.tag_selected {
-     background-color: red;
+/*set-profile*/
+.profile-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 15px 0;
+}
+.img-div .profile-data {
+    width: 40%;
+    min-width: 320px;
+}
+.img-div img {
+    width: 100%;
+}
+.profile-form {
+    width: 50%;
+    max-width: 320px;
+}
+.profile-data {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    font-size: 20px;
+    margin-left: 10px;
+}
+.profile-form .ng-invalid.ng-dirty {
+    border-color: red;
+}
+.profile-form .ng-valid.ng-dirty {
+    border-color: green;
+}
+.form-alert {
+    color: red;
 }

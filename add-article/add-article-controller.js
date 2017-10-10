@@ -1,12 +1,11 @@
 app.controller('addArticleCtrl', ['$scope', '$http', '$location', '$routeParams', '$rootScope', function($scope, $http, $location, $routeParams, $rootScope) {
 
   if ($rootScope.profileName === undefined) {
-    $http.get('/getprofilename').then(function(res){
-      console.log(res);
-      $rootScope.profileName = res.data;
+    $http.get('/getprofile').then(function(res){
+      $rootScope.profileName = res.data[0].name;
+      $rootScope.profilePhoto = res.data[0].photo;
     });
   };
-
 
   $scope.addArticle = function() {
     var arr_tags, str_tags;
@@ -25,8 +24,6 @@ app.controller('addArticleCtrl', ['$scope', '$http', '$location', '$routeParams'
     };
     $http.post('/addarticle', data).then(function(data){
       $location.path('/list');
-      console.log('add article post work');
-      console.log(data.data);
     });
   };
 
@@ -41,7 +38,7 @@ app.controller('addArticleCtrl', ['$scope', '$http', '$location', '$routeParams'
       ( $scope.tags === undefined || $scope.tags === '') ? ($scope.tags = tagValue) : ($scope.tags += ' ' + tagValue);
     };
 
-    tag.classList.toggle('tag_selected');
+    tag.classList.toggle('btn-warning');
     tag.addedFlag = !tag.addedFlag;
   };
 }]);

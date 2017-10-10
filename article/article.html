@@ -1,3 +1,35 @@
+<div ng-show="!showSetArticleFlag">
+  <div class="article-div">
+    <h2> {{ article.caption }} </h2>
+    <div class="name-author">
+      <p><small>Дата публикации:</small> <i>{{ article.date | date: 'dd/MM/yyyy hh:mm' }}</i> </p>
+      <p><small>Автор:</small> <i>{{ $root.profileName }}</i> </p>
+    </div>
+    <p class="short-article-text"> {{ article.text }}</p>
+    <p><small>Теги: </small><i>{{ article.tags }}</i> </p>
+  
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-success" ng-click="showComments()"> {{contentButton}} </button>
+      <button type="button" class="btn btn-secondary" ng-click="editingArticle()">Редактировать статью</button>
+      <a type="button" class="btn btn-primary" href="#!">Вернуться к списку статей</a>
+    </div>
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
+      Удалить статью
+      <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+    </button>
+  </div>
+  
+  <div  ng-show="showCommentsFlag">
+    <div ng-repeat="comment in allComments" class="comment-div">
+      <p class="comment-text"> {{ comment.text }} </p>
+      <div class="name-author">
+        <p> <small>{{ $root.profileName }}</small> </p>
+        <p> <small>{{ comment.date | date: 'dd/MM/yyyy' }}</small> </p>
+      </div>
+      <button class="btn btn-danger btn-xs" ng-click="delComment(comment.date)">Удалить комментарий</button>
+    </div>
+  </div>
+</div>
 
 <form ng-if="showSetArticleFlag">
   <div class="form-group">
@@ -14,49 +46,11 @@
   </div>
   <p><i>Автор:</i> {{$root.profileName}}</p>
   
-  
   <button class="btn btn-success" type="submit" ng-click="saveEditingArticle()">Сохранить изменения</button>
   <button class="btn" ng-click="cancelEditingArticle()">Отменить изменения</button>
 </form>
-
-
-<div ng-show="!showSetArticleFlag">
-  <div class="article-div">
-    <h2> {{ article.caption }} </h2>
-    <div class="name-author">
-      <p><small>Дата публикации:</small> <i>{{ article.date | date: 'dd/MM/yyyy hh:mm' }}</i> </p>
-      <p><small>Автор:</small> <i>{{ $root.profileName }}</i> </p>
-    </div>
-    <p class="short-article-text"> {{ article.text }}</p>
-    <p><small>Теги: </small><i>{{ article.tags }}</i> </p>
-  
-    <div class="btn-group" role="group">
-      <button type="button" class="btn btn-success" ng-click="showComments()"> {{contentButton}} </button>
-      <button type="button" class="btn btn-secondary" ng-click="editingArticle()">Редактировать статью</button>
-      <a type="button" class="btn btn-primary" href="#!">Вернуться к списку статей</a>
-    </div>
-    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Удалть статью</button>
-    
-    <a > </a>
-    
-  </div>
-  
-  <div  ng-show="showCommentsFlag">
-    <div ng-repeat="comment in allComments" class="comment-div">
-      <p class="comment-text"> {{ comment.text }} </p>
-      <div class="name-author">
-        <p> <small>{{ $root.profileName }}</small> </p>
-        <p> <small>{{ comment.date | date: 'dd/MM/yyyy' }}</small> </p>
-      </div>
-      
-      <button class="btn btn-danger btn-xs" ng-click="delComment(comment.date)">Удалить комментарий</button>
-    </div>
-  </div>
-</div>
-
 <br>
-
-<form ng-show="!showSetArticleFlag">
+<form ng-show="!showSetArticleFlag" class="comment-form">
   <div class="form-group">
     <label for="commenttext">Текст комментария</label>
     <textarea class="form-control" id="commenttext" rows="2" cols="30" ng-model="textComment"></textarea>
@@ -64,7 +58,7 @@
   <button type="submit" class="btn" ng-click="addComment()">Добавить комментарий</button>
 </form>
 
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
