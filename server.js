@@ -2,6 +2,7 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var mongoClient = require("mongodb").MongoClient;
 var objectId = require("mongodb").ObjectID;
+var fs = require("fs");
 
 var app = express();
 var jsonParser = bodyParser.json();
@@ -102,14 +103,6 @@ app.get("/getprofile", jsonParser, function(req, res){
   });
 });
 
-app.get("/getdefaultprofile", jsonParser, function(req, res){
-  mongoClient.connect(url, function(err, db){
-    db.collection("defaultprofile").find().toArray(function(err, countries){
-      res.json(countries);
-    });
-  });
-});
-
 app.post("/setprofile", jsonParser, function (req, res) {
   console.log(req.body);
   mongoClient.connect(url, function(err, db){
@@ -122,13 +115,19 @@ app.post("/setprofile", jsonParser, function (req, res) {
 });
 
 app.get('/countries', jsonParser, function(req, res){
-  mongoClient.connect(url, function(err, db){
-    console.log("дайте страны");
-
-    db.collection("countries").find().toArray(function(err, countries){
-      res.json(countries);
-    });
+  var obj;
+  fs.readFile('countries.json', 'utf8', function (err, data) {
+    if (err) throw err;
+    obj = JSON.parse(data);
+    res.json(obj)
   });
+  // mongoClient.connect(url, function(err, db){
+  //   console.log("дайте страны");
+  //
+  //   db.collection("countries").find().toArray(function(err, countries){
+  //     res.json(countries);
+  //   });
+  // });
 });
 
 app.listen(6083, function(){

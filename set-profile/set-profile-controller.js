@@ -1,7 +1,7 @@
 app.controller('setProfileCtrl', ['$scope', '$http', '$location', '$routeParams', '$rootScope', function($scope, $http, $location, $routeParams, $rootScope) {
 
   $http.get('/countries').then(function(res){
-    $scope.countries = res.data[0].countries.sort();
+    $scope.countries = res.data.countries.sort();
   });
 
   var profileSettingFlag = false,

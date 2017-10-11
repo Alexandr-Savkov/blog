@@ -31,7 +31,6 @@ app.filter('searchTag', function(){
     if(!tag){
       return articles;
     };
-
     var result = [];
     tag = tag.toLowerCase();
 
@@ -40,8 +39,17 @@ app.filter('searchTag', function(){
         result.push(article);
       };
     });
-
     return result;
   };
+});
 
+app.factory('getCountries', function($http) {
+
+  var obj = {countries:null};
+
+  $http.get('countries.json').success(function(data) {
+    // you can do some processing here
+    obj.ountries = data;
+  });
+  return obj;
 });
