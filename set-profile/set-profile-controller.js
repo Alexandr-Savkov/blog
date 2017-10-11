@@ -12,18 +12,24 @@ app.controller('setProfileCtrl', ['$scope', '$http', '$location', '$routeParams'
 
   var img = document.getElementById('profile-photo-img');
 
-  $http.get('/getprofile').then(function(res){
-    $rootScope.profileName = res.data[0].name;
-    $scope.profileTown = res.data[0].town;
-    $scope.profileCountry = res.data[0].country;
-    img.src = res.data[0].photo;
-    $rootScope.profilePhoto = res.data[0].photo;
 
-    oldProfileCountry = $scope.profileCountry;
-    oldProfileName = $rootScope.profileName;
-    oldProfileTown = $scope.profileTown;
-    oldProfilePhoto = img.src;
+  $http.get('/getprofile').then(function(res){
+    if (res.data[0] === undefined) {
+      $scope.defaultProfile();
+    } else {
+      $rootScope.profileName = res.data[0].name;
+      $scope.profileTown = res.data[0].town;
+      $scope.profileCountry = res.data[0].country;
+      img.src = res.data[0].photo;
+      $rootScope.profilePhoto = res.data[0].photo;
+
+      oldProfileCountry = $scope.profileCountry;
+      oldProfileName = $rootScope.profileName;
+      oldProfileTown = $scope.profileTown;
+      oldProfilePhoto = img.src;
+    };
   });
+
 
   $scope.showForm = false;
   $scope.settingButton = 'Редактировать профиль';
@@ -77,18 +83,25 @@ app.controller('setProfileCtrl', ['$scope', '$http', '$location', '$routeParams'
   };
 
   $scope.defaultProfile = function () {
-    $http.get('/getdefaultprofile').then(function(res){
-      $rootScope.profileName = res.data[0].name;
-      $scope.profileTown = res.data[0].town;
-      $scope.profileCountry = res.data[0].country;
-      img.src = res.data[0].photo;
-      $rootScope.profilePhoto = res.data[0].photo;
+
+      $rootScope.profileName = 'Name'
+      $scope.profileTown = 'Town';
+      $scope.profileCountry = 'Country';
+      img.src = '';
+      $rootScope.profilePhoto = '';
 
       oldProfileCountry = $scope.profileCountry;
       oldProfileName = $rootScope.profileName;
       oldProfileTown = $scope.profileTown;
       oldProfilePhoto = img.src;
-    });
+
+      var data = {
+        name: $rootScope.profileName,
+        country: $scope.profileCountry,
+        town: $scope.profileTown,
+        photo: $rootScope.profilePhoto,
+      };
+      $http.post('/setprofile', data).then(function(data){});
 
     if ($scope.showForm) {$scope.showSetting()};
   };

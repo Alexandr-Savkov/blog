@@ -109,12 +109,14 @@ textarea {
     justify-content: space-around;
     margin: 15px 0;
 }
-.img-div .profile-data {
-    width: 40%;
-    min-width: 320px;
+.img-div, .profile-data {
+    width: 50%;
+    min-width: 310px;
+    display: flex;
+    align-items: center;
 }
 .img-div img {
-    width: 100%;
+    width: 280px;
 }
 .profile-form {
     width: 50%;

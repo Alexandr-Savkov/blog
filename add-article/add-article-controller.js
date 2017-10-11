@@ -2,8 +2,12 @@ app.controller('addArticleCtrl', ['$scope', '$http', '$location', '$routeParams'
 
   if ($rootScope.profileName === undefined) {
     $http.get('/getprofile').then(function(res){
-      $rootScope.profileName = res.data[0].name;
-      $rootScope.profilePhoto = res.data[0].photo;
+      if (res.data[0] === undefined) {
+        $rootScope.profileName = "Default Name";
+      } else {
+        $rootScope.profileName = res.data[0].name;
+        $rootScope.profilePhoto = res.data[0].photo;
+      };
     });
   };
 
