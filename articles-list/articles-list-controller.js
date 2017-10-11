@@ -22,9 +22,11 @@ app.controller('articlesListCtrl', ['$scope', '$http', '$location', '$rootScope'
       for (var i = 1; i <= $scope.paginationCount; ++i) {
         $scope.pageList.push(i);
       };
+      $scope.visibleArticles = $scope.articles.slice(0, 5);
+    } else {
+      $scope.visibleArticles = $scope.articles;
     };
-    $scope.visibleArticles = $scope.articles.slice(0, 5);
-});
+  });
 
   //for pagination
   $scope.showPages = function(pageValue) {
@@ -35,26 +37,25 @@ app.controller('articlesListCtrl', ['$scope', '$http', '$location', '$rootScope'
     });
     elem.classList.add("active");
 
+    $scope.editTag();
     var start = (pageValue-1) * 5;
-    var end = (pageValue-1) * 5 + 5;
-
-    $scope.visibleArticles = $scope.articles.slice( start, end );
+    $scope.visibleArticles = $scope.ArticleWithTag.slice( start, start + 5 );
   };
 
   $scope.editTag = function () {
-    $scope.visibleArticles = $scope.articles;
-    $scope.visibleArticles = $filter('searchTag')($scope.visibleArticles, $scope.tag);
+    $scope.ArticleWithTag = $filter('searchTag')($scope.articles, $scope.tag);
+    $scope.countArticleWithTag = $scope.ArticleWithTag.length;
 
-    $scope.paginationFlag = ($scope.visibleArticles.length > 5) ? true : false;
+    $scope.paginationFlag = ($scope.ArticleWithTag.length > 5) ? true : false;
     if ($scope.paginationFlag) {
-      var countLists = $scope.visibleArticles.length;
+      var countLists = $scope.ArticleWithTag.length;
       $scope.paginationCount = Math.ceil(countLists / 5);
       $scope.pageList = [];
       for (var i = 1; i <= $scope.paginationCount; ++i) {
         $scope.pageList.push(i);
       };
     };
-    $scope.visibleArticles = $scope.visibleArticles.slice(0, 5);
+    $scope.visibleArticles = $scope.ArticleWithTag.slice(0, 5);
   };
 
 }]);

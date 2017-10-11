@@ -17,6 +17,9 @@ header, footer {
     justify-content: space-around;
     align-items: center;
 }
+a {
+    cursor: pointer;
+}
 a.logo {
     text-decoration: none;
     color: #1f3a6e;
@@ -73,6 +76,9 @@ header img, footer img {
 }
 nav.pagination-div {
     text-align: center;
+}
+.search_tag {
+    width: 50%;
 }
 
 /*article*/
