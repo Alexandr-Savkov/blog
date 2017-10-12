@@ -6,7 +6,6 @@ app.controller('addArticleCtrl', ['$scope', '$http', '$location', '$routeParams'
         $rootScope.profileName = "Default Name";
       } else {
         $rootScope.profileName = res.data[0].name;
-        $rootScope.profilePhoto = res.data[0].photo;
       };
     });
   };

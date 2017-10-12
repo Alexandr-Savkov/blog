@@ -4,10 +4,8 @@ app.controller('articlesListCtrl', ['$scope', '$http', '$location', '$rootScope'
     $http.get('/getprofile').then(function(res){
       if (res.data[0] === undefined) {
         $rootScope.profileName = "Default Name";
-        $rootScope.profilePhoto = '';
       } else {
         $rootScope.profileName = res.data[0].name;
-        $rootScope.profilePhoto = res.data[0].photo;
       };
     });
   };
