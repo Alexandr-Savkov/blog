@@ -9,11 +9,11 @@ var jsonParser = bodyParser.json();
 var url = "mongodb://localhost:27017/blog";
 
 app.use(bodyParser.json({limit: '50mb'})); // for post big data
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}) );
 
 app.use(express.static(__dirname + "/"));
 
-app.get("/list", function(req, res){
+app.get("/list", function(req, res) {
   mongoClient.connect(url, function(err, db){
     db.collection("articles").find().toArray(function(err, articles){
       res.json(articles);
@@ -21,18 +21,16 @@ app.get("/list", function(req, res){
   });
 });
 
-app.get("/getarticle/:id", jsonParser, function(req, res){
-  console.log(req.params.id);
+app.get("/getarticle/:id", jsonParser, function(req, res) {
   mongoClient.connect(url, function(err, db){
     var id = new objectId(req.params.id);
-    db.collection("articles").findOne({_id: id }, function(err, article){
+    db.collection("articles").findOne({_id: id}, function(err, article){
       res.send(article);
     });
   });
 });
 
 app.post("/addarticle", jsonParser, function (req, res) {
-  console.log(req.body);
   mongoClient.connect(url, function(err, db){
     db.collection("articles").insertOne(req.body, function(err, result){
       if(err) return res.status(400).send();
@@ -42,10 +40,9 @@ app.post("/addarticle", jsonParser, function (req, res) {
 });
 
 app.post("/setarticle/:id", jsonParser, function (req, res) {
-  console.log(req.body);
   mongoClient.connect(url, function(err, db){
     var id = new objectId(req.params.id);
-    db.collection("articles").remove({_id: id})
+    db.collection("articles").remove({_id: id});
     db.collection("articles").insertOne(req.body, function(err, result){
       if(err) return res.status(400).send();
       res.send(req.body);
@@ -54,40 +51,30 @@ app.post("/setarticle/:id", jsonParser, function (req, res) {
 });
 
 app.delete("/delarticle/:id", jsonParser, function(req, res){
-  mongoClient.connect(url, function(err, db){
-    console.log("in delete req");
-    console.log(req.params);
+  mongoClient.connect(url, function(err, db) {
     var id = new objectId(req.params.id);
-    db.collection("articles").findOneAndDelete({_id: id}, function(err, result){
+    db.collection("articles").findOneAndDelete({_id: id}, function(err, result) {
       if(err) return res.status(400).send();
       res.send(result);
     });
   });
 });
 
-app.post("/addcomment", jsonParser, function (req, res) {
-
-  console.log(req.body);
-
-  mongoClient.connect(url, function(err, db){
+app.post("/addcomment", jsonParser, function(req, res) {
+  mongoClient.connect(url, function(err, db) {
     var id = new objectId(req.body.id);
-    db.collection("articles").updateOne({_id: id}, {$push: {comments: req.body.comment} },
+    db.collection("articles").updateOne( {_id: id}, {$push: {comments: req.body.comment} },
     function(err, result){
-
       if(err) return res.status(400).send();
-
       res.send(result);
     });
   });
 });
 
-app.post("/delcomment/:id", jsonParser, function(req, res){
+app.post("/delcomment/:id", jsonParser, function(req, res) {
   mongoClient.connect(url, function(err, db){
-    console.log("in delete comment");
-    console.log(req.body);
-    console.log(req.params.id);
     var id = new objectId(req.params.id);
-    db.collection("articles").updateOne({_id: id}, {$set: {comments: req.body} },
+    db.collection("articles").updateOne( {_id: id}, {$set: {comments: req.body} },
       function(err, result){
         if(err) return res.status(400).send();
         res.send(result);
@@ -95,41 +82,33 @@ app.post("/delcomment/:id", jsonParser, function(req, res){
   });
 });
 
-app.get("/getprofile", jsonParser, function(req, res){
-  mongoClient.connect(url, function(err, db){
-    db.collection("profile").find().toArray(function(err, profile){
+app.get("/getprofile", jsonParser, function(req, res) {
+  mongoClient.connect(url, function(err, db) {
+    db.collection("profile").find().toArray(function(err, profile) {
       res.json(profile);
     });
   });
 });
 
-app.post("/setprofile", jsonParser, function (req, res) {
-  console.log(req.body);
-  mongoClient.connect(url, function(err, db){
+app.post("/setprofile", jsonParser, function(req, res) {
+  mongoClient.connect(url, function(err, db) {
     db.collection("profile").drop();
-    db.collection("profile").insert(req.body, function(err, result){
+    db.collection("profile").insert(req.body, function(err, result) {
       if(err) return res.status(400).send();
       res.send(req.body);
     });
   });
 });
 
-app.get('/countries', jsonParser, function(req, res){
+app.get('/countries', jsonParser, function(req, res) {
   var obj;
   fs.readFile('countries.json', 'utf8', function (err, data) {
     if (err) throw err;
     obj = JSON.parse(data);
     res.json(obj)
   });
-  // mongoClient.connect(url, function(err, db){
-  //   console.log("дайте страны");
-  //
-  //   db.collection("countries").find().toArray(function(err, countries){
-  //     res.json(countries);
-  //   });
-  // });
 });
 
-app.listen(6083, function(){
+app.listen(6083, function() {
   console.log("Сервер ожидает подключения...");
 });

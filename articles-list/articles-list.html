@@ -1,6 +1,6 @@
 <input type="text" class="form-control search_tag" ng-model="tag" placeholder="поиск по тегу" ng-change="editTag()">
 <h3 ng-if="!visibleArticles.length">Нет публикаций.</h3>
-<p ng-show="tag.length">Найдено статей по тегу:<i>{{ tag }}</i>{{ countArticleWithTag }}</p>
+<p ng-show="tag.length">Найдено статей по тегу <i>{{ tag }}:</i> {{ countArticleWithTag }}</p>
 <div ng-repeat="article in visibleArticles" class="short-article">
   <h3>{{ article.caption }}</h3>
   <div class="name-author">
