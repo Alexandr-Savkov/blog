@@ -12,7 +12,6 @@ app.controller('setProfileCtrl', ['$scope', '$http', '$location', '$routeParams'
 
   var img = document.getElementById('profile-photo-img');
 
-
   $http.get('/getprofile').then(function(res){
     if (res.data[0] === undefined) {
       $scope.defaultProfile();
@@ -34,7 +33,7 @@ app.controller('setProfileCtrl', ['$scope', '$http', '$location', '$routeParams'
   $scope.showForm = false;
   $scope.settingButton = 'Редактировать профиль';
 
-  $scope.showSetting = function () {
+  $scope.showSetting = function() {
     if (!profileSettingFlag) {   // if user do not save change, return old data
       $rootScope.profileName = oldProfileName;
       $scope.profileCountry = oldProfileCountry;
@@ -47,11 +46,11 @@ app.controller('setProfileCtrl', ['$scope', '$http', '$location', '$routeParams'
     profileSettingFlag = false;
   };
 
-  $scope.changeImg = function () {
-    var file    = document.querySelector('input[type=file]').files[0];
-    var reader  = new FileReader();
+  $scope.changeImg = function() {
+    var file = document.querySelector('input[type=file]').files[0];
+    var reader = new FileReader();
 
-    reader.onloadend = function () {
+    reader.onloadend = function() {
       img.src = reader.result;
       $rootScope.profilePhoto = reader.result;
     };
@@ -64,7 +63,7 @@ app.controller('setProfileCtrl', ['$scope', '$http', '$location', '$routeParams'
     };
   };
 
-  $scope.saveProfile = function () {
+  $scope.saveProfile = function() {
     profileSettingFlag = true;
     $scope.settingButton = 'Редактировать профиль';
     $scope.showForm = !$scope.showForm;
@@ -73,6 +72,7 @@ app.controller('setProfileCtrl', ['$scope', '$http', '$location', '$routeParams'
     oldProfileName = $rootScope.profileName;
     oldProfileTown = $scope.profileTown;
     oldProfilePhoto = $rootScope.profilePhoto;
+
     var data = {
       name: $rootScope.profileName,
       country: $scope.profileCountry,
@@ -82,8 +82,7 @@ app.controller('setProfileCtrl', ['$scope', '$http', '$location', '$routeParams'
     $http.post('/setprofile', data).then(function(data){});
   };
 
-  $scope.defaultProfile = function () {
-
+  $scope.defaultProfile = function() {
       $rootScope.profileName = 'Name'
       $scope.profileTown = 'Town';
       $scope.profileCountry = 'Country';
@@ -101,9 +100,11 @@ app.controller('setProfileCtrl', ['$scope', '$http', '$location', '$routeParams'
         town: $scope.profileTown,
         photo: $rootScope.profilePhoto,
       };
-      $http.post('/setprofile', data).then(function(data){});
+      $http.post('/setprofile', data).then(function(){});
 
-    if ($scope.showForm) {$scope.showSetting()};
+    if ($scope.showForm) {
+      $scope.showSetting()
+    };
   };
 
 }]);

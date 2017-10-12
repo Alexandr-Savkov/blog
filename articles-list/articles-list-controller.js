@@ -12,9 +12,9 @@ app.controller('articlesListCtrl', ['$scope', '$http', '$location', '$rootScope'
     });
   };
 
-  $http.get('/list').then(function(res){
+  $http.get('/list').then(function(res) {
     $scope.articles = res.data;
-    $scope.articles.sort(function(a, b){
+    $scope.articles.sort(function(a, b) {
      return ( (a.date - b.date) > 0 ) ? -1 : 1;
     });
 
@@ -35,7 +35,7 @@ app.controller('articlesListCtrl', ['$scope', '$http', '$location', '$rootScope'
 
   //for pagination
   $scope.showPages = function(pageValue) {
-    var elem = document.getElementById(String(pageValue));
+    var elem = document.getElementById( String(pageValue) );
     var allElem = document.getElementsByClassName('page-item');
     angular.forEach(allElem, function(item, i) {
       allElem[i].classList.remove("active");
@@ -44,7 +44,7 @@ app.controller('articlesListCtrl', ['$scope', '$http', '$location', '$rootScope'
 
     $scope.editTag();
     var start = (pageValue-1) * 5;
-    $scope.visibleArticles = $scope.ArticleWithTag.slice( start, start + 5 );
+    $scope.visibleArticles = $scope.ArticleWithTag.slice(start, start + 5);
   };
 
   $scope.editTag = function () {

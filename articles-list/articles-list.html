@@ -1,8 +1,8 @@
 <input type="text" class="form-control search_tag" ng-model="tag" placeholder="поиск по тегу" ng-change="editTag()">
 <h3 ng-if="!visibleArticles.length">Нет публикаций.</h3>
-<p ng-show="tag.length">Найдено статей по тегу <i>{{tag}}</i>: {{countArticleWithTag}} </p>
+<p ng-show="tag.length">Найдено статей по тегу:<i>{{ tag }}</i>{{ countArticleWithTag }}</p>
 <div ng-repeat="article in visibleArticles" class="short-article">
-  <h3> {{ article.caption }} </h3>
+  <h3>{{ article.caption }}</h3>
   <div class="name-author">
     <p>
       <small>Дата публикации:</small>
@@ -18,11 +18,11 @@
   </p>
   <div class="name-author">
     <p>
-      <small>Теги: </small>
+      <small>Теги:</small>
       <i>{{ article.tags }}</i>
     </p>
     <p>
-      <small>Комментариев: </small>
+      <small>Комментариев:</small>
       <i>{{ article.comments.length }}</i>
     </p>
   </div>
@@ -30,7 +30,7 @@
 
 <nav aria-label="Page navigation" class="pagination-div" ng-if="paginationFlag">
   <ul class="pagination">
-    <li class="page-item" id="{{page}}" ng-click="showPages( page )" ng-repeat="page in pageList">
+    <li class="page-item" id="{{ page }}" ng-click="showPages( page )" ng-repeat="page in pageList">
       <a class="page-link">{{ page }}</a>
     </li>
   </ul>

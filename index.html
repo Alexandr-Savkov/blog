@@ -21,12 +21,16 @@
   <header>
     <a href="#!list" class="logo">BlogName</a>
     <div class="nav-div">
-        <div class="nav-links"><a href="#!list">Все статьи</a></div>
-        <div class="nav-links"><a href="#!add">Добавить статью</a></div>
+        <div class="nav-links">
+          <a href="#!list">Все статьи</a>
+        </div>
+        <div class="nav-links">
+          <a href="#!add">Добавить статью</a>
+        </div>
         <div class="nav-links">
           <a href="#!profile">
-            <img src="{{$root.profilePhoto}}">
-            {{$root.profileName | limitTo: 13}}
+            <img src="{{ $root.profilePhoto }}">
+            {{ $root.profileName | limitTo: 13 }}
           </a>
         </div>
     </div>
@@ -37,12 +41,16 @@
   <footer>
     <a href="#!list" class="logo">BlogName</a>
     <div class="nav-div">
-      <div class="nav-links"><a href="#!list">Все статьи</a></div>
-      <div class="nav-links"><a href="#!add">Добавить статью</a></div>
+      <div class="nav-links">
+        <a href="#!list">Все статьи</a>
+      </div>
+      <div class="nav-links">
+        <a href="#!add">Добавить статью</a>
+      </div>
       <div class="nav-links">
         <a href="#!profile">
-          <img src="{{$root.profilePhoto}}">
-          {{$root.profileName | limitTo: 13}}
+          <img src="{{ $root.profilePhoto }}">
+          {{ $root.profileName | limitTo: 13 }}
         </a>
       </div>
     </div>

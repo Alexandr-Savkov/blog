@@ -33,19 +33,16 @@ app.controller('articleCtrl', ['$scope', '$http', '$location', '$routeParams', '
 
   $scope.delArticle = function() {
     var url = "/delarticle/" + $routeParams.id;
-
-    $http.delete(url).then(function(data){
+    $http.delete(url).then(function(){
       $location.path('/list');
     });
   };
 
   $scope.editingArticle = function() {
-    if (!$scope.showSetArticleFlag) {
-      $scope.showSetArticleFlag = true;
-    } else {$scope.showSetArticleFlag = true;}
+    $scope.showSetArticleFlag = true;
   };
 
-  $scope.cancelEditingArticle = function () {
+  $scope.cancelEditingArticle = function() {
     $scope.showSetArticleFlag = false;
 
     $scope.article.date = oldArticleDate;
@@ -62,6 +59,7 @@ app.controller('articleCtrl', ['$scope', '$http', '$location', '$routeParams', '
       arr_tags = $scope.article.tags.split(/,+ +|,+| +|; +/);
       str_tags = arr_tags.join(' ');
     };
+
     var data = {
       author: $rootScope.profileName,
       date: Date.now(),
@@ -71,7 +69,7 @@ app.controller('articleCtrl', ['$scope', '$http', '$location', '$routeParams', '
       comments: [],
     };
     var url = "/setarticle/" + $routeParams.id;
-    $http.post(url, data).then(function(data){
+    $http.post(url, data).then(function(){
       $location.path('/list');
     });
   };
@@ -88,19 +86,20 @@ app.controller('articleCtrl', ['$scope', '$http', '$location', '$routeParams', '
         text: $scope.textComment,
         date: Date.now(),
         author: $scope.profileName,
-    }};
+      }
+    };
     $scope.allComments.push(data.comment);
-    $http.post('/addcomment', data).then(function(data){});
+
+    $http.post('/addcomment', data).then(function(){});
     $scope.textComment = '';
   };
 
-  $scope.delComment = function (date){
+  $scope.delComment = function(date){
     var url = "/delcomment/" + $routeParams.id;
-    var newComments = $scope.allComments;
-    _.remove(newComments, function(n) {
+    _.remove($scope.allComments, function(n) {
       return (n.date == date);
     });
-    $http.post(url, newComments).then(function(data){});
+    $http.post(url, $scope.allComments).then(function(data){});
   };
 
 }]);
