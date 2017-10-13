@@ -1,12 +1,8 @@
 app.controller('articlesListCtrl', ['$scope', '$http', '$location', '$rootScope', '$filter', function($scope, $http, $location, $rootScope, $filter) {
 
-  if ($rootScope.profileName === undefined) {
-    $http.get('/getprofile').then(function(res){
-      if (res.data[0] === undefined) {
-        $rootScope.profileName = "Default Name";
-      } else {
-        $rootScope.profileName = res.data[0].name;
-      };
+  if (!$rootScope.profileName) {
+    $http.get('/getprofile').then(function(res) {
+      $rootScope.profileName = res.data[0] ? res.data[0].name : "Default Name"
     });
   };
 

@@ -23,21 +23,21 @@ function stateConfig ($routeProvider) {
     .otherwise({
       redirectTo: '/list'
     });
-};
+}
 
 app.filter('searchTag', function(){
   return function(articles, tag){
 
     if(!tag){
       return articles;
-    };
+    }
     var result = [];
     tag = tag.toLowerCase();
 
     angular.forEach(articles, function(article){
       if(article.tags.toLowerCase().indexOf(tag) !== -1){
         result.push(article);
-      };
+      }
     });
     return result;
   };
@@ -48,7 +48,7 @@ app.factory('getCountries', function($http) {
   var obj = {countries:null};
 
   $http.get('countries.json').success(function(data) {
-    // you can do some processing here
+
     obj.ountries = data;
   });
   return obj;

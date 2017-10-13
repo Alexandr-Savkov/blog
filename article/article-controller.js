@@ -1,19 +1,15 @@
 app.controller('articleCtrl', ['$scope', '$http', '$location', '$routeParams', '$rootScope', function($scope, $http, $location, $routeParams, $rootScope) {
 
-  if ($rootScope.profileName === undefined) {
-    $http.get('/getprofile').then(function(res){
-      if (res.data[0] === undefined) {
-        $rootScope.profileName = "Default Name";
-      } else {
-        $rootScope.profileName = res.data[0].name;
-      };
+  if (!$rootScope.profileName) {
+    $http.get('/getprofile').then(function(res) {
+      $rootScope.profileName = res.data[0] ? res.data[0].name : "Default Name"
     });
   };
 
-  var oldArticleDate,
-      oldArticleCaption,
-      oldArticleText,
-      oldArticleTags;
+  var oldArticleDate = null,
+      oldArticleCaption = null,
+      oldArticleText = null,
+      oldArticleTags = null;
 
   $scope.showCommentsFlag = false;
   $scope.contentButton = "Развернуть комментарии";
@@ -52,7 +48,7 @@ app.controller('articleCtrl', ['$scope', '$http', '$location', '$routeParams', '
 
   $scope.saveEditingArticle = function() {
     var arr_tags, str_tags;
-    if ($scope.article.tags === undefined) {
+    if (!$scope.article.tags) {
       str_tags = 'тэгов нет';
     } else {
       arr_tags = $scope.article.tags.split(/,+ +|,+| +|; +/);
